@@ -1,34 +1,36 @@
 require 'rails_helper'
 
 describe FilterMoviesFacade do
-  subject { described_class.new(@filter_params) }
+  subject { described_class.new(filter_params) }
   let(:scores) { (1..5).to_a }
   let(:categories) { Faker::Lorem.words(4) }
   let(:text_search) { Faker::Lorem.word }
+  let(:filter_params) { {} }
 
   describe '#movies' do
     let(:user) { create(:user) }
-    let(:movies) { create_list(:movie, @movies_count, user: user) }
+    let(:movies_count) { 10 }
+    let(:movies) { create_list(:movie, movies_count, user: user) }
     let(:categories) do
-      Array.new(@movies_count, Faker::Hipster.words(5))
+      Array.new(movies_count, Faker::Hipster.words(5))
     end
     let(:scores) do
-      (1..@movies_count).to_a
+      (1..movies_count).to_a
     end
 
-    before do
-      @movies_count = 10
-
-      movies.each_with_index do |movie, i|
-        movie.save_categories(categories[i])
-        movie.update(avg_score: scores[i])
-      end
-
-      @filter_params = {
+    let(:filter_params) do
+      {
         scores: scores.slice(0, 1),
         categories: categories.first,
         text_search: movies.first.title.split(' ').first
       }
+    end
+
+    before do
+      movies.each_with_index do |movie, i|
+        movie.save_categories(categories[i])
+        movie.update(avg_score: scores[i])
+      end
     end
 
     it 'has one movie for all filters' do
@@ -44,9 +46,7 @@ describe FilterMoviesFacade do
         }
       end
 
-      before do
-        @filter_params = { scores: scores }
-      end
+      let(:filter_params) { { scores: scores } }
 
       it 'make hash with methods' do
         expect(subject.filters).to eq(filter_hash)
@@ -62,8 +62,8 @@ describe FilterMoviesFacade do
         }
       end
 
-      before do
-        @filter_params = {
+      let(:filter_params) do
+        {
           scores: scores,
           categories: categories,
           text_search: text_search
@@ -77,9 +77,7 @@ describe FilterMoviesFacade do
   end
 
   describe '#filter_rating_selected_for' do
-    before do
-      @filter_params = { scores: scores }
-    end
+    let(:filter_params) { { scores: scores } }
 
     it 'is "selected" for name' do
       expect(subject.filter_rating_selected_for(scores.first))
@@ -93,9 +91,7 @@ describe FilterMoviesFacade do
   end
 
   describe '#filter_categories_selected_for' do
-    before do
-      @filter_params = { categories: categories }
-    end
+    let(:filter_params) { { categories: categories } }
 
     it 'is "selected" for name' do
       expect(subject.filter_categories_selected_for(categories.first))
@@ -109,10 +105,6 @@ describe FilterMoviesFacade do
   end
 
   describe '#categories_statistics' do
-    before do
-      @filter_params = {}
-    end
-
     it 'call movie method' do
       expect(Movie).to receive(:all_categories_with_count)
       subject.categories_statistics
@@ -124,10 +116,6 @@ describe FilterMoviesFacade do
   end
 
   describe '#rating_statistics' do
-    before do
-      @filter_params = {}
-    end
-
     it 'call movie method' do
       expect(Movie).to receive(:all_scores_with_count)
       subject.rating_statistics

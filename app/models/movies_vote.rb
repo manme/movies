@@ -18,7 +18,7 @@ class MoviesVote < ApplicationRecord
                     .where(user_id: current_user_id, movie_id: movie_ids)
                     .pluck(:movie_id, :score)
 
-    movies_scores.each_with_object(Hash.new) do |(k, v), h|
+    movies_scores.each_with_object({}) do |(k, v), h|
       h[k] = v
     end
   end

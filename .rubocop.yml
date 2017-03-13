@@ -9,7 +9,15 @@ AllCops:
     - config/**/**
     - bin/**/**
     - spec/*.rb
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
   Rails:
     Enabled: true
 Documentation:
   Enabled: false
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  SupportedStyles:
+    - nested
+    - compact

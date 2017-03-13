@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 describe MoviesFacade do
-  subject { described_class.new(@current_user, @page) }
+  subject { described_class.new(current_user, page) }
   let(:user) { create(:user) }
   let(:movies) { create_list(:movie, 50, user: user) }
   let(:movie_deleted) { create(:movie, user: user, is_deleted: true) }
   let(:movie_active) { create(:movie, user: user) }
+  let(:page) { nil }
+  let(:current_user) { nil }
 
   describe '#all' do
     context 'all movies' do
       let(:created_at) { subject.movies.pluck(:created_at) }
 
       before do
-        @current_user = nil
-        @page = nil
         movies
       end
 
@@ -33,10 +33,9 @@ describe MoviesFacade do
 
     context 'movies with pagination' do
       let(:movies_for_page) { Movie.order(created_at: :desc).pluck(:id) }
+      let(:page) { 2 }
 
       before do
-        @current_user = nil
-        @page = 2
         movies
         subject.all
       end
@@ -86,14 +85,13 @@ describe MoviesFacade do
         movie_deleted
       end
 
-      it { expect{ subject.find(movie_deleted.id) }.to raise_error(ActiveRecord::RecordNotFound) }
+      it { expect { subject.find(movie_deleted.id) }.to raise_error(ActiveRecord::RecordNotFound) }
     end
   end
 
   describe '#can_vote?' do
     context 'when not authorized' do
       before do
-        @current_user = nil
         movies
         subject.all
       end
@@ -105,8 +103,9 @@ describe MoviesFacade do
 
     context 'when authorized' do
       context 'can vote' do
+        let(:current_user) { user }
+
         before do
-          @current_user = user
           movies
           subject.all
         end
@@ -116,9 +115,9 @@ describe MoviesFacade do
 
       context 'cant vote again' do
         let(:vote) { create(:movies_vote, user: user, movie: subject.movies.first, score: 0) }
+        let(:current_user) { user }
 
         before do
-          @current_user = user
           movies
           subject.all
           vote
@@ -131,9 +130,9 @@ describe MoviesFacade do
 
   describe '#categories_for' do
     let(:categories) { Faker::Hipster.words }
+    let(:current_user) { user }
 
     before do
-      @current_user = user
       movies
       subject.all
       subject.movies.first.save_categories(categories)

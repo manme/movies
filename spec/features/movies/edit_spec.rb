@@ -8,7 +8,6 @@ feature 'edit movie' do
     fill_in 'Title', with: title
     fill_in 'Description', with: description
     find('.selectpicker').find(:xpath, 'option[1]').select_option
-    @selected_categories = all('.selectpicker option[selected]').map(&:text)
   end
 
   let(:user) { create(:user) }
@@ -32,6 +31,8 @@ feature 'edit movie' do
 
     fill_movie_fields
 
+    selected_categories = all('.selectpicker option[selected]').map(&:text)
+
     expect { click_on 'Save' }.not_to change { Movie.count }
     expect(Movie.last.category_list.to_a.size).to eq(2)
     expect(current_path).to eq(movies_path)
@@ -39,7 +40,7 @@ feature 'edit movie' do
     expect(has_content?(title)).to be true
     expect(has_content?(description)).to be true
 
-    @selected_categories.each do |category|
+    selected_categories.each do |category|
       expect(has_content?(category)).to be true
     end
   end

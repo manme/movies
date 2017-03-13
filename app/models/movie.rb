@@ -18,7 +18,7 @@ class Movie < ApplicationRecord
   include PgSearch
   include Scorable
 
-  CATEGORIES = %w(comedy action thriller drama adventure)
+  CATEGORIES = %w(comedy action thriller drama adventure).freeze
   SCORE_MAX = 5
 
   belongs_to :user
@@ -50,8 +50,8 @@ class Movie < ApplicationRecord
       tag_ids = ActsAsTaggableOn::Tag.where(name: categories).pluck(:id)
 
       Movie.joins(:taggings)
-            .where('taggings.tag_id in (?)', tag_ids)
-            .where('taggings.context = ?', 'categories')
+           .where('taggings.tag_id in (?)', tag_ids)
+           .where('taggings.context = ?', 'categories')
     end
 
     def for_scores(scores)

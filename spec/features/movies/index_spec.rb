@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'index movies' do
-
   let(:user) { create(:user) }
   let(:movies) { create_list(:movie, 50, user: user, avg_score: 3.8, votes_number: 5, total_score: 19) }
   let(:categories) { Faker::Hipster.words(5) }

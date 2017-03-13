@@ -17,13 +17,13 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
-  let(:user) { create(:user) }
-  let(:movies) { create_list(:movie, @movie_count, user: user) }
   subject { described_class }
+  let(:user) { create(:user) }
+  let(:movies) { create_list(:movie, movie_count, user: user) }
+  let(:movie_count) { 10 }
 
   describe '.search_for' do
     before do
-      @movie_count = 10
       movies
     end
 
@@ -39,23 +39,25 @@ RSpec.describe Movie, type: :model do
   end
 
   describe '.for_score' do
+    let(:movie_count) { 5 }
+
     before do
-      @movie_count = 5
       movies.each_with_index do |movie, i|
         movie.update(avg_score: i + 0.5)
       end
     end
 
     it 'find in description' do
-      @movie_count.times do |i|
+      movie_count.times do |i|
         expect(subject.for_score(i).first).to eq(movies[i])
       end
     end
   end
 
   describe '#delete' do
+    let(:movie_count) { 1 }
+
     before do
-      @movie_count = 1
       movies
     end
 
@@ -66,9 +68,9 @@ RSpec.describe Movie, type: :model do
 
   describe '#save_categories' do
     let(:categories) { Faker::Hipster.words }
+    let(:movie_count) { 1 }
 
     before do
-      @movie_count = 1
       movies
     end
 
@@ -82,7 +84,6 @@ RSpec.describe Movie, type: :model do
     let(:categories) { Faker::Hipster.words }
 
     before do
-      @movie_count = 10
       movies.each do |movie|
         movie.save_categories(categories)
       end
@@ -99,11 +100,10 @@ RSpec.describe Movie, type: :model do
 
   describe '.for_scores' do
     let(:scores) { subject.all_scores }
+    let(:movie_count) { 5 }
 
     before do
-      @movie_count = 5
       movies.each_with_index do |movie, index|
-
         movie.update(avg_score: scores[index])
       end
     end
@@ -126,7 +126,6 @@ RSpec.describe Movie, type: :model do
     let(:categories_count) { {} }
 
     before do
-      @movie_count = 10
       movies.each do |movie|
         movie.save_categories(categories)
         categories.each do |c|
@@ -144,9 +143,9 @@ RSpec.describe Movie, type: :model do
   describe '.all_scores_with_count' do
     let(:scores) { subject.all_scores }
     let(:scores_count) { {} }
+    let(:movie_count) { 5 }
 
     before do
-      @movie_count = 5
       movies.each_with_index do |movie, index|
         movie.update(avg_score: scores[index])
         scores_count[scores[index]] ||= 0
@@ -164,7 +163,6 @@ RSpec.describe Movie, type: :model do
     let(:movies_categories) { {} }
 
     before do
-      @movie_count = 10
       movies.each_with_index do |movie, i|
         movie.save_categories([categories[i]])
         movies_categories[movie.id] = [categories[i]]

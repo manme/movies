@@ -42,7 +42,6 @@ shared_examples_for 'scorable' do
 
       before do
         object
-        p object
       end
 
       it 'set score' do

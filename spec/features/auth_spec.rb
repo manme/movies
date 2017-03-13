@@ -6,7 +6,8 @@ feature 'Auth' do
       :user,
       email: email,
       password: password,
-      password_confirmation: password)
+      password_confirmation: password
+    )
   end
 
   let(:password) { Faker::Internet.password }

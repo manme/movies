@@ -39,7 +39,7 @@ describe MoviesController do
 
   describe 'GET #show' do
     before do
-      get :show, id: movie
+      get :show, params: { id: movie }
     end
 
     it 'shows movie' do
@@ -70,14 +70,14 @@ describe MoviesController do
     context 'authorized access' do
       it 'shows form for new movie' do
         sign_in user
-        post :create, movie: movie_attr
+        post :create, params: { movie: movie_attr }
         expect(response).to redirect_to(:movies)
       end
     end
 
     context 'guest access' do
       it 'requires login' do
-        post :create, movie: movie_attr
+        post :create, params: { movie: movie_attr }
         expect(response).to redirect_to(:new_user_session)
       end
     end
@@ -87,14 +87,14 @@ describe MoviesController do
     context 'authorized access' do
       it 'edit form for existing movie' do
         sign_in user
-        get :edit, id: movie
+        get :edit, params: { id: movie }
         expect(response).to have_http_status(:success)
       end
     end
 
     context 'guest access' do
       it 'requires login' do
-        get :edit, id: movie
+        get :edit, params: { id: movie }
         expect(response).to redirect_to(:new_user_session)
       end
     end
@@ -104,14 +104,14 @@ describe MoviesController do
     context 'authorized access' do
       it 'update existing movie' do
         sign_in user
-        put :update, id: movie, movie: FactoryGirl.attributes_for(:movie, user: user)
+        put :update, params: { id: movie, movie: FactoryGirl.attributes_for(:movie, user: user) }
         expect(response).to redirect_to(:movies)
       end
     end
 
     context 'guest access' do
       it 'requires login' do
-        put :update, id: movie, movie: FactoryGirl.attributes_for(:movie, user: user)
+        put :update, params: { id: movie, movie: FactoryGirl.attributes_for(:movie, user: user) }
         expect(response).to redirect_to(:new_user_session)
       end
     end
@@ -121,14 +121,14 @@ describe MoviesController do
     context 'authorized access' do
       it 'set deleted status to movie' do
         sign_in user
-        delete :destroy, id: movie
+        delete :destroy, params: { id: movie }
         expect(response).to redirect_to(:movies)
       end
     end
 
     context 'guest access' do
       it 'requires login' do
-        delete :destroy, id: movie
+        delete :destroy, params: { id: movie }
         expect(response).to redirect_to(:new_user_session)
       end
     end
@@ -148,7 +148,7 @@ describe MoviesController do
 
       it 'set score to any movie' do
         sign_in user
-        post :vote, movie_id: movie, score: 2
+        post :vote, params: { movie_id: movie, score: 2 }
         expect(response).to have_http_status(:success)
         expect(response.content_type).to eq('application/json')
         expect(response.body).to eq(vote_resp.to_json)
@@ -157,7 +157,7 @@ describe MoviesController do
 
     context 'guest access' do
       it 'requires login' do
-        post :vote, movie_id: movie, score: 2
+        post :vote, params: { movie_id: movie, score: 2 }
         expect(response).to redirect_to(:new_user_session)
       end
     end
