@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key
 #  title        :string           not null
 #  description  :text             not null
-#  user_id      :integer
+#  user_id      :integer          not null
 #  is_deleted   :boolean          default("false")
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
