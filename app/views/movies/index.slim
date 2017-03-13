@@ -1,8 +1,4 @@
-- flash.any?
-  .row
-   - flash.each do |key, value|
-    .col-sm-12.alert-danger.alert
-      = value
+= render partial: 'layouts/flash_errors'
 = render partial: 'movies/menu'
 .movies-container data-js-url=movies_path(format: :js)
   = render partial: 'movies/movies'
