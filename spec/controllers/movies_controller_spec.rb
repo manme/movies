@@ -37,7 +37,7 @@ describe MoviesController do
     end
   end
 
-  describe "GET #show" do
+  describe 'GET #show' do
     before do
       get :show, id: movie
     end
@@ -47,7 +47,7 @@ describe MoviesController do
     end
   end
 
-  describe "GET #new" do
+  describe 'GET #new' do
     context 'authorized access' do
       it 'shows form for new movie' do
         sign_in user
@@ -64,7 +64,7 @@ describe MoviesController do
     end
   end
 
-  describe "POST #create" do
+  describe 'POST #create' do
     let(:movie_attr) { FactoryGirl.attributes_for(:movie, user: user) }
 
     context 'authorized access' do
@@ -83,7 +83,7 @@ describe MoviesController do
     end
   end
 
-  describe "GET #edit" do
+  describe 'GET #edit' do
     context 'authorized access' do
       it 'edit form for existing movie' do
         sign_in user
@@ -100,7 +100,7 @@ describe MoviesController do
     end
   end
 
-  describe "PUT #update" do
+  describe 'PUT #update' do
     context 'authorized access' do
       it 'update existing movie' do
         sign_in user
@@ -117,7 +117,7 @@ describe MoviesController do
     end
   end
 
-  describe "DELETE #destroy" do
+  describe 'DELETE #destroy' do
     context 'authorized access' do
       it 'set deleted status to movie' do
         sign_in user
@@ -134,7 +134,7 @@ describe MoviesController do
     end
   end
 
-  describe "POST #vote" do
+  describe 'POST #vote' do
     let(:vote_resp) do
       {
         int_score: movie.reload.int_score,

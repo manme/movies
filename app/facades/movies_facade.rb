@@ -20,7 +20,7 @@ class MoviesFacade
     # because this pagination with sql offsets is a bad way
     # http://use-the-index-luke.com/no-offset
     @movies = @movies.paginate(page: @page, per_page: @per_page)
-    @movie_ids = @movies.map { |movie| movie.id }
+    @movie_ids = @movies.map(&:id)
   end
 
   def find(movie_id)

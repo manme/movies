@@ -2,7 +2,8 @@ require 'rails_helper'
 
 feature 'Auth' do
   let(:user) do
-    create(:user,
+    create(
+      :user,
       email: email,
       password: password,
       password_confirmation: password)

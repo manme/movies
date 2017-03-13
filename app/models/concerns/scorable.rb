@@ -14,8 +14,8 @@ module Scorable
     raise 'score is not valid' unless (1..self.class::SCORE_MAX).to_a.include?(score)
 
     ActiveRecord::Base.transaction do
-      unless MoviesVote.exists?(movie_id: self.id, user_id: user.id)
-        MoviesVote.create!(movie_id: self.id, user_id: user.id, score: score)
+      unless MoviesVote.exists?(movie_id: id, user_id: user.id)
+        MoviesVote.create!(movie_id: id, user_id: user.id, score: score)
         update_score!(score)
       end
     end
@@ -42,6 +42,6 @@ module Scorable
   private
 
   def update_score!(score)
-    self.update(new_score_params(score))
+    update(new_score_params(score))
   end
 end

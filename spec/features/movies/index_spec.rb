@@ -39,7 +39,7 @@ feature 'index movies' do
 
   feature 'check movie fields' do
     let(:movie) do
-      movie_id = page.all(".movie").first['data-movie-id']
+      movie_id = page.all('.movie').first['data-movie-id']
       movies.find { |m| m.id = movie_id }
     end
 
@@ -51,11 +51,9 @@ feature 'index movies' do
         visit movies_path
 
         movie
-
       end
 
       scenario 'check movie fields' do
-
         expect(movie_container).to have_content(movie.title)
         expect(movie_container).to have_content(movie.description)
         expect(movie_container).to have_content(movie.category_list.reverse.join(', '))
@@ -82,7 +80,6 @@ feature 'index movies' do
       end
 
       scenario 'check movie fields' do
-
         expect(movie_container).to have_content(movie.title)
         expect(movie_container).to have_content(movie.description)
         expect(movie_container).to have_content(movie.category_list.reverse.join(', '))
@@ -97,7 +94,6 @@ feature 'index movies' do
       end
 
       scenario 'send movie vote', js: true do
-
         star = movie_container.find('.star[data-index="5"]')
         star.hover
         expect(movie_container.has_css?('.star[data-index="5"].selected')).to be false

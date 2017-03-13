@@ -28,13 +28,13 @@ RSpec.describe Movie, type: :model do
     end
 
     it 'find in description' do
-      expect(subject.search_for(movies.first.description.split(' ').first).to_a).
-        to include(movies.first)
+      expect(subject.search_for(movies.first.description.split(' ').first).to_a)
+        .to include(movies.first)
     end
 
     it 'find in title' do
-      expect(subject.search_for(movies.first.title.split(' ').first).to_a).
-        to include(movies.first)
+      expect(subject.search_for(movies.first.title.split(' ').first).to_a)
+        .to include(movies.first)
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Movie, type: :model do
     end
 
     it 'sets is_deleted to movies' do
-      expect { movies.first.delete }.to change{subject.active.count}.from(1).to(0)
+      expect { movies.first.delete }.to change { subject.active.count }.from(1).to(0)
     end
   end
 
@@ -73,8 +73,8 @@ RSpec.describe Movie, type: :model do
     end
 
     it 'creates categories for movies' do
-      expect { movies.first.save_categories(categories) }.
-        to change{movies.first.reload.category_list}.from([]).to(categories)
+      expect { movies.first.save_categories(categories) }
+        .to change { movies.first.reload.category_list }.from([]).to(categories)
     end
   end
 
@@ -172,7 +172,7 @@ RSpec.describe Movie, type: :model do
     end
 
     it 'returns all movies for categories' do
-      categories_h = movies_categories.first(5).inject({}) {|m, v| m[v.first] = v.second; m }
+      categories_h = movies_categories.first(5).each_with_object({}) { |v, m| m[v.first] = v.second }
       expect(subject.categories_for(movies.pluck(:id).first(5))).to eq(categories_h)
     end
   end

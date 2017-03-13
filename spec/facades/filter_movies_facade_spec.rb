@@ -25,7 +25,7 @@ describe FilterMoviesFacade do
       end
 
       @filter_params = {
-        scores: scores.slice(0,1),
+        scores: scores.slice(0, 1),
         categories: categories.first,
         text_search: movies.first.title.split(' ').first
       }
@@ -82,13 +82,13 @@ describe FilterMoviesFacade do
     end
 
     it 'is "selected" for name' do
-      expect(subject.filter_rating_selected_for(scores.first)).
-        to eq('selected')
+      expect(subject.filter_rating_selected_for(scores.first))
+        .to eq('selected')
     end
 
     it 'is nil for name' do
-       expect(subject.filter_rating_selected_for(10)).
-        to be_nil
+      expect(subject.filter_rating_selected_for(10))
+        .to be_nil
     end
   end
 
@@ -98,13 +98,13 @@ describe FilterMoviesFacade do
     end
 
     it 'is "selected" for name' do
-      expect(subject.filter_categories_selected_for(categories.first)).
-        to eq('selected')
+      expect(subject.filter_categories_selected_for(categories.first))
+        .to eq('selected')
     end
 
     it 'is nil for name' do
-       expect(subject.filter_categories_selected_for('some_category')).
-        to be_nil
+      expect(subject.filter_categories_selected_for('some_category'))
+        .to be_nil
     end
   end
 

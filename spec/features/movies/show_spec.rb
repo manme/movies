@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'show movie' do
-
   let(:user) { create(:user) }
   let(:movie) { create(:movie, user: user, avg_score: 3.8, votes_number: 5, total_score: 19) }
   let(:categories) { Faker::Hipster.words(5) }
@@ -19,7 +18,6 @@ feature 'show movie' do
       end
 
       scenario 'check movie fields' do
-
         expect(page).to have_content(movie.title)
         expect(page).to have_content(movie.description)
 
@@ -46,7 +44,6 @@ feature 'show movie' do
       end
 
       scenario 'check movie fields' do
-
         expect(page).to have_content(movie.title)
         expect(page).to have_content(movie.description)
 
@@ -65,7 +62,6 @@ feature 'show movie' do
       end
 
       scenario 'send movie vote', js: true do
-
         star = page.find('.star[data-index="5"]')
         star.hover
         expect(has_css?('.star[data-index="5"].selected')).to be false
@@ -77,4 +73,3 @@ feature 'show movie' do
     end
   end
 end
-

@@ -25,10 +25,11 @@ class FilterMoviesFacade
   end
 
   def filters
-    @filters ||= { categories: Movie.method(:for_categories),
+    @filters ||= {
+      categories: Movie.method(:for_categories),
       scores: Movie.method(:for_scores),
       text_search: Movie.method(:search_for)
-    }.delete_if { |name, filter| filter_params[name].blank? }
+    }.delete_if { |name, _filter| filter_params[name].blank? }
   end
 
   def filter_rating_selected_for(i)

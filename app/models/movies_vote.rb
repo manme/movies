@@ -14,13 +14,12 @@ class MoviesVote < ApplicationRecord
   belongs_to :movie
 
   def self.scores_for(movie_ids, current_user_id)
-    movies_scores = MoviesVote.
-      where(user_id: current_user_id, movie_id: movie_ids).
-      pluck(:movie_id, :score)
+    movies_scores = MoviesVote
+                    .where(user_id: current_user_id, movie_id: movie_ids)
+                    .pluck(:movie_id, :score)
 
-    movies_scores.inject(Hash.new) do |h, (k,v)|
+    movies_scores.each_with_object(Hash.new) do |(k, v), h|
       h[k] = v
-      h
     end
   end
 end

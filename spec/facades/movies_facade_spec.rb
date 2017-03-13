@@ -22,7 +22,7 @@ describe MoviesFacade do
       end
 
       it 'loaded' do
-        expect{subject.all}.to change{subject.movies.try(:count)}.from(nil).to(10)
+        expect { subject.all }.to change { subject.movies.try(:count) }.from(nil).to(10)
       end
 
       it 'ordered by created_at' do
@@ -86,7 +86,7 @@ describe MoviesFacade do
         movie_deleted
       end
 
-      it { expect{subject.find(movie_deleted.id)}.to raise_error(ActiveRecord::RecordNotFound) }
+      it { expect{ subject.find(movie_deleted.id) }.to raise_error(ActiveRecord::RecordNotFound) }
     end
   end
 

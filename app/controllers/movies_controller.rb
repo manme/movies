@@ -59,8 +59,8 @@ class MoviesController < ApplicationController
 
     render json: response, status: 200
 
-    rescue
-      render nothing: true, status: 500
+  rescue
+    render nothing: true, status: 500
   end
 
   private

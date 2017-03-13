@@ -2,10 +2,13 @@ require: rubocop-rspec
 
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120
 AllCops:
   Excludes:
     - db/**/**
+    - config/**/**
+    - bin/**/**
+    - spec/*.rb
   Rails:
     Enabled: true
 Documentation:

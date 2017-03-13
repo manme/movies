@@ -1,19 +1,18 @@
 require 'rails_helper'
 
 feature 'edit movie' do
-
   let(:title) { Faker::Lorem.sentence }
   let(:description) { Faker::Lorem.paragraph }
 
   def fill_movie_fields
-    fill_in 'Title',  with: title
+    fill_in 'Title', with: title
     fill_in 'Description', with: description
     find('.selectpicker').find(:xpath, 'option[1]').select_option
     @selected_categories = all('.selectpicker option[selected]').map(&:text)
   end
 
   let(:user) { create(:user) }
-  let(:movie) { create(:movie, user: user)}
+  let(:movie) { create(:movie, user: user) }
 
   before do
     movie
@@ -33,7 +32,7 @@ feature 'edit movie' do
 
     fill_movie_fields
 
-    expect { click_on 'Save' }.not_to change{ Movie.count }
+    expect { click_on 'Save' }.not_to change { Movie.count }
     expect(Movie.last.category_list.to_a.size).to eq(2)
     expect(current_path).to eq(movies_path)
 

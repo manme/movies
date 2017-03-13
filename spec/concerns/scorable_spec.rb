@@ -5,7 +5,8 @@ shared_examples_for 'scorable' do
   let(:user) { create(:user) }
   let(:object) { create(described_class.to_s.underscore.to_sym, { user: user }.merge(scores)) }
   let(:avg_score) { Faker::Number.between(1, 5) + 0.5 }
-  let(:scores) do {
+  let(:scores) do
+    {
       total_score: 0,
       votes_number: 0,
       avg_score: 0
@@ -29,10 +30,11 @@ shared_examples_for 'scorable' do
 
   describe '#score_for!' do
     context 'for first vote' do
-      let(:scores) do {
-        total_score: 10,
-        votes_number: 2,
-        avg_score: 5
+      let(:scores) do
+        {
+          total_score: 10,
+          votes_number: 2,
+          avg_score: 5
         }
       end
 
@@ -44,7 +46,7 @@ shared_examples_for 'scorable' do
       end
 
       it 'set score' do
-        expect{object.score_for!(user, 2)}.to change{object.avg_score}.from(5).to(4)
+        expect { object.score_for!(user, 2) }.to change { object.avg_score }.from(5).to(4)
         expect(MoviesVote.pluck(:user_id, :movie_id, :score).last).to eq(movies_vote)
       end
     end
@@ -85,7 +87,7 @@ shared_examples_for 'scorable' do
       {
         total_score: 26,
         votes_number: 3,
-        avg_score: 26/3.0
+        avg_score: 26 / 3.0
       }
     end
 
