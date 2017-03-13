@@ -12,6 +12,7 @@ AllCops:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
     - 'tmp/**/*'
+    - spec/support/share_db_connections.rb
   Rails:
     Enabled: true
 Documentation:
