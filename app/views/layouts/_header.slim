@@ -1,0 +1,24 @@
+nav.navbar.navbar-default.navbar-static-top#top-navbar
+  .container-fluid
+    .navbar-header
+      button.collapsed.navbar-toggle aria-expanded="false" data-target="#navbar-collapse" data-toggle="collapse" type="button"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      = link_to 'MoviesApp', root_path, class: 'navbar-brand'
+    #navbar-collapse.collapse.navbar-collapse
+      - if user_signed_in?
+        .navbar-form.navbar-left
+          = link_to t('movies.add_movie'), new_movie_path, class: 'btn btn-default'
+      ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          li
+            = link_to "Edit Profile", edit_user_registration_path
+          li
+            = link_to "Sign out", destroy_user_session_path, method: :delete
+        - else
+          li
+            = link_to "Sign in", new_user_session_path
+          li
+            = link_to "Sign up", new_user_registration_path

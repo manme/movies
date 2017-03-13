@@ -1,0 +1,37 @@
+.panel.panel-default.panel-body
+  .row
+    .col-sm-offset-4.col-sm-4
+      h2
+        | Welcome to
+        br
+        small Movies
+      hr
+  .row.col-md-8.col-md-offset-2
+    .login data-example-id="simple-horizontal-form"
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal'}) do |f|
+        - if flash.any?
+          .form-group
+            - flash.each do |key, value|
+                .col-sm-10.col-sm-offset-2.alert-danger.alert
+                  = value
+
+        .form-group
+          label.col-sm-2.control-label for="email-field" Email
+          .col-sm-10
+            = f.email_field :email, autofocus: true, class: 'form-control email-field', placeholder: 'Email'
+        .form-group
+          label.col-sm-2.control-label for="password-field"  Password
+          .col-sm-10
+             = f.password_field :password, autocomplete: "off", class: 'form-control password-field', placeholder: "Password"
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            .checkbox
+              label
+                = f.check_box :remember_me
+                | Remember me
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button.btn.btn-default type="submit"  Sign in
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            = render "devise/shared/links"

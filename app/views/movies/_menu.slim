@@ -1,0 +1,33 @@
+nav.navbar.navbar-default.row.filter
+  .container-fluid
+    .navbar-header
+      button.collapsed.navbar-toggle aria-expanded="false" data-target="#movies-menu" data-toggle="collapse" type="button"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      .navbar-brand Filters
+    = form_tag movies_path, method: :get, class: 'collapse navbar-collapse', id: 'movies-menu', role: 'form' do
+      input value="1" type="hidden" name="page"
+      .navbar-form.navbar-left
+        .form-group
+          select.selectpicker size='10' data-width='100%' title='Categories' data-live-search='true' name='categories[]'
+            option selected='' data-content='all'
+              = ''
+            - @filter_facade.categories_statistics.each do |name, count|
+              option data-content="#{name} (#{count})" selected=@filter_facade.filter_categories_selected_for(name)
+                = name
+
+      .navbar-form.navbar-left
+        .form-group
+          select.selectpicker size='5' data-width='100%' title='Stars' multiple='' name='scores[]'
+            - for i in (1..Movie::SCORE_MAX).to_a.reverse
+              - stars = Array.new(i, "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>").join
+              - stars << " (#{@filter_facade.rating_statistics[i]})"
+              option data-content=stars selected=@filter_facade.filter_rating_selected_for(i)
+                = i
+      .navbar-form.navbar-left
+        .form-group
+          input.form-control name='text_search' placeholder="Find text" value=@filter_facade.filter_params[:text_search]
+      .navbar-form.navbar-left
+        button.btn.btn-default.apply-filters type="submit" Apply

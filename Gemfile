@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
@@ -23,14 +23,27 @@ gem 'devise'
 gem 'slim'
 gem 'pg_search'
 gem 'acts-as-taggable-on'
-gem 'ratyrate'
+
+# frontend
+gem 'bootstrap-sass'
+gem 'bootstrap_helper', '~> 4.2.3'
+gem 'rails-assets-bootstrap-flat'
+gem 'bootstrap-select-rails'
+
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 group :development, :test do
   gem 'rspec-rails', '>= 3.1.0'
   # gem 'rspec-rails-mocha', '~> 0.3.1', require: false
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
   gem 'guard-rspec', '>= 4.3.1'
   gem 'faker'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
+  gem 'capybara', '~> 2.5'
+  gem 'poltergeist', '~> 1.8'
 end
 
 group :development do

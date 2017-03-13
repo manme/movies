@@ -1,0 +1,31 @@
+.row.thumb.movie.thumbnail data-movie-id="#{movie.id}"
+  .col-lg-7
+    h4
+      - if in_show
+        = movie.title
+      - else
+        = link_to movie.title, movie_path(movie)
+    p
+      = movie.description
+  .col-lg-2
+    b
+      =< @facade.categories_for(movie).join(', ')
+
+  .col-lg-2
+    .stars class="#{'disabled' unless user_signed_in? && @facade.can_vote?(movie)}" data-vote-path=movie_vote_path(movie)
+      - movie.int_score.times do |i|
+        span.star.voted.glyphicon.glyphicon-star.selected data-index=(i + 1)
+      - (Movie::SCORE_MAX - movie.int_score).times do |i|
+        span.star.voted.glyphicon.glyphicon-star data-index=(i + movie.int_score + 1)
+
+      span.avg_score
+        - if movie.votes_number > 0
+          = movie.score_number
+      span.votes_number
+        - if movie.votes_number > 0
+          = "(#{movie.votes_number})"
+  .col-lg-1
+    span
+      - if user_signed_in?
+        => link_to 'Edit', edit_movie_path(movie)
+        =< link_to 'Delete', movie_path(movie), method: :delete

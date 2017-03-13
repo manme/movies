@@ -10,18 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301150953) do
+ActiveRecord::Schema.define(version: 20170306115626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "movies", force: :cascade do |t|
-    t.string   "title",       null: false
-    t.text     "description", null: false
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "title",                        null: false
+    t.text     "description",                  null: false
+    t.integer  "user_id",                      null: false
+    t.boolean  "is_deleted",   default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.bigint   "total_score",  default: 0
+    t.float    "avg_score",    default: 0.0
+    t.integer  "votes_number", default: 0
     t.index ["user_id"], name: "index_movies_on_user_id", using: :btree
+  end
+
+  create_table "movies_votes", force: :cascade do |t|
+    t.integer  "movie_id",               null: false
+    t.integer  "user_id",                null: false
+    t.integer  "score",      default: 0
+    t.datetime "created_at"
+    t.index ["movie_id"], name: "index_movies_votes_on_movie_id", using: :btree
+    t.index ["user_id", "movie_id"], name: "index_movies_votes_on_user_id_and_movie_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_movies_votes_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|

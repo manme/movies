@@ -1,0 +1,56 @@
+.panel.panel-default.panel-body
+  .row
+    .col-sm-offset-4.col-sm-4
+      h2
+        | Edit
+        br
+        small Profile
+      hr
+  .row.col-md-8.col-md-offset-2
+    .login data-example-id="simple-horizontal-form"
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal'}) do |f|
+
+        / = devise_error_messages!
+        -  resource.errors.any?
+          .form-group
+          -  resource.errors.each do |key, value|
+            .col-sm-10.col-sm-offset-2.alert.alert-danger
+                = "#{key.capitalize} #{value}"
+        br
+        .form-group
+          label.col-sm-2.control-label for="email-field" Email
+          .col-sm-10
+            = f.email_field :email, autofocus: true, class: 'form-control email-field', placeholder: 'Email'
+        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+          | Currently waiting confirmation for:
+            = resource.unconfirmed_email
+
+        .form-group
+          label.col-sm-2.control-label for="password-field"
+            | Password
+          .col-sm-10
+            - if @minimum_password_length
+              em
+                |(
+                = @minimum_password_length
+                | characters minimum)
+                br
+            = f.password_field :password, autocomplete: "off", class: 'form-control password-field', placeholder: "Password"
+            i
+              | (leave blank if you don't want to change it)
+        .form-group
+          label.col-sm-2.control-label for="password-confirmation-field"  Password Confirmation
+          .col-sm-10
+            = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control password-confirmation-field', placeholder: "Password Confirmation"
+        .form-group
+          label.col-sm-2.control-label for="password-current-field"
+            | Current Password
+          .col-sm-10
+            = f.password_field :current_password, autocomplete: "off", class: 'form-control password-current-field', placeholder: "Current Password"
+            i
+              | (we need your current password to confirm your changes)
+
+
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button.btn.btn-default type="submit"  Save

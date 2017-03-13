@@ -1,0 +1,9 @@
+.panel.panel-default.panel-body
+  .row
+    .col-sm-offset-4.col-sm-4
+      h2
+        | Create
+        br
+        small Movie
+      hr
+  = render partial: 'movies/movie_form', locals: { movie: @movie }

@@ -1,0 +1,12 @@
+require: rubocop-rspec
+
+
+Metrics/LineLength:
+  Max: 100
+AllCops:
+  Excludes:
+    - db/**/**
+  Rails:
+    Enabled: true
+Documentation:
+  Enabled: false

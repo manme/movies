@@ -1,0 +1,21 @@
+.row.col-md-8.col-md-offset-2
+  .login data-example-id="simple-horizontal-form"
+    = form_for movie, html: { class: 'form-horizontal' } do |f|
+      .form-group
+        label.col-sm-2.control-label for="title-field" Title
+        .col-sm-10
+          = f.text_field :title, autofocus: true, class: 'form-control title-field', placeholder: 'Title'
+      .form-group
+        label.col-sm-2.control-label for="description-area"  Description
+        .col-sm-10
+           = f.text_area :description, autocomplete: "off", class: 'form-control description-area', placeholder: "Description"
+      .form-group
+        label.col-sm-2.control-label for="description-area"  Categories
+        .col-sm-10
+          = f.select :category_list, options_for_select(Movie::CATEGORIES.collect { |category| [category] }, movie.category_list), {}, { multiple: true, size: 5, class: 'selectpicker', 'data-live-search' => 'true', 'data-width' => '75%'  }
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-default type="submit" Save
+
+
+

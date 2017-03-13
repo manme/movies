@@ -1,0 +1,41 @@
+.panel.panel-default.panel-body
+  .row
+    .col-sm-offset-4.col-sm-4
+      h2
+        | Sign up
+        br
+        small Movies
+      hr
+  .row.col-md-8.col-md-offset-2
+    .login data-example-id="simple-horizontal-form"
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal'}) do |f|
+        /= devise_error_messages!
+        -  resource.errors.any?
+          .form-group
+          -  resource.errors.each do |key, value|
+            .col-sm-10.col-sm-offset-2.alert.alert-danger
+                = "#{key.capitalize} #{value}"
+        .form-group
+          label.col-sm-2.control-label for="email-field" Email
+          .col-sm-10
+            = f.email_field :email, autofocus: true, class: 'form-control email-field', placeholder: 'Email'
+        .form-group
+          label.col-sm-2.control-label for="password-field"  Password
+          .col-sm-10
+            - if @minimum_password_length
+              em
+                |(
+                = @minimum_password_length
+                | characters minimum)
+                br
+            = f.password_field :password, autocomplete: "off", class: 'form-control password-field', placeholder: "Password"
+        .form-group
+          label.col-sm-2.control-label for="password-confirmation-field"  Password Confirmation
+          .col-sm-10
+            = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control password-confirmation-field', placeholder: "Password Confirmation"
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button.btn.btn-default type="submit"  Sign up
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            = render "devise/shared/links"

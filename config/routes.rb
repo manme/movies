@@ -5,10 +5,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  root 'movies#index'
-
   resources :movies do
-    get 'vote', to: 'movies#vote'
+    post 'vote', to: 'movies#vote'
   end
+
+  root 'movies#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

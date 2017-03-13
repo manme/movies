@@ -1,0 +1,16 @@
+.movies-list#movies-list
+  - if @facade.movies.count > 0
+    - if @facade.movies.any?
+        - @facade.movies.each do |movie|
+          = render partial: 'movies/movie', locals: { in_show: false, movie: movie }
+    - else
+      .alert.alert-warning role="alert"
+        | We haven't movies.. Change settings of filter
+  - else
+    .alert.alert-warning role="alert"
+      | We haven't movies.. Could you add?
+
+  .pagination_style
+    = will_paginate @facade.movies, params: @filter_facade.filter_params.merge({format: :html}), previous_label: '<', next_label: '>', renderer: BootstrapPagination::Rails
+
+
