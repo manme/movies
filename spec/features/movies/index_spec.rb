@@ -35,6 +35,7 @@ feature 'index movies' do
 
         # poltergeist bug with fontawesome
         page.execute_script %($('form#movies-menu').submit())
+        sleep(1)
 
         expect(current_path).to eq(movies_path)
         expect(all('.movie').size).to eq(1)
@@ -47,6 +48,7 @@ feature 'index movies' do
 
         # poltergeist bug with fontawesome
         page.execute_script %($('form#movies-menu').submit())
+        sleep(1)
 
         expect(current_path).to eq(movies_path)
         expect(all('.movie').size).to eq(1)
@@ -56,6 +58,7 @@ feature 'index movies' do
       scenario 'text search', js: true do
         find('#movies-menu input[name="text_search"]').set movie_title_search
         page.execute_script %($('form#movies-menu').submit())
+        sleep(1)
 
         expect(current_path).to eq(movies_path)
         expect(all('.movie').size).to eq(1)

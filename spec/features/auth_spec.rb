@@ -100,7 +100,7 @@ feature 'Auth' do
 
         expect { click_on 'Save' }.not_to change { User.count }
         expect(current_path).to eq('/')
-        expect(page).to have_selector('.alert-danger')
+        expect(page).to have_selector('.alert-success')
       end
     end
   end
