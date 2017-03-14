@@ -13,21 +13,58 @@ feature 'index movies' do
   end
 
   feature 'movies list' do
+    let(:movie_title) { "#{Faker::Lorem.sentence} #{movie_title_search}" }
+    let(:movie_title_search) { 'xxxxx' }
+    let(:movie) { create(:movie, user: user, avg_score: 4, title: movie_title) }
+    let(:movie_categories) { Faker::Hipster.words(2) }
     before do
       movies.each do |movie|
         movie.save_categories(categories)
       end
+      movie.save_categories(movie_categories)
 
       visit movies_path
-
-      expect(all('.movie').size).to eq(10)
     end
 
-    scenario 'use filters' do
-      expect(page).to have_selector('#movies-menu')
+    context 'for filter' do
+      let(:category_option) { "#{movie_categories.first} (1)" }
+
+      scenario 'rating', js: true do
+        find('.rating-filter button').click
+        find('.rating-filter').find('ul.dropdown-menu.inner > li[data-original-index="1"]').click
+
+        # poltergeist bug with fontawesome
+        page.execute_script %($('form#movies-menu').submit())
+
+        expect(current_path).to eq(movies_path)
+        expect(all('.movie').size).to eq(1)
+        expect(find('.movie')['data-movie-id']).to eq(movie.id.to_s)
+      end
+
+      scenario 'category', js: true do
+        find('.category-filter button').click
+        find(".category-filter").find('ul.dropdown-menu.inner > li', text: category_option).click
+
+        # poltergeist bug with fontawesome
+        page.execute_script %($('form#movies-menu').submit())
+
+        expect(current_path).to eq(movies_path)
+        expect(all('.movie').size).to eq(1)
+        expect(find('.movie')['data-movie-id']).to eq(movie.id.to_s)
+      end
+
+      scenario 'text search', js: true do
+        find('#movies-menu input[name="text_search"]').set movie_title_search
+        page.execute_script %($('form#movies-menu').submit())
+
+        expect(current_path).to eq(movies_path)
+        expect(all('.movie').size).to eq(1)
+        expect(find('.movie')['data-movie-id']).to eq(movie.id.to_s)
+      end
     end
 
     scenario 'use pagination', js: true do
+      expect(all('.movie').size).to eq(10)
       expect(page).to have_selector('.pagination_style')
       next_page = ".pagination_style a[href='#{movies_path(format: :html, page: 2)}']"
       all(next_page).first.click

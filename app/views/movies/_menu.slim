@@ -10,7 +10,7 @@ nav.navbar.navbar-default.row.filter
     = form_tag movies_path, method: :get, class: 'collapse navbar-collapse', id: 'movies-menu', role: 'form' do
       input value="1" type="hidden" name="page"
       .navbar-form.navbar-left
-        .form-group
+        .form-group.category-filter
           select.selectpicker size='10' data-width='100%' title='Categories' data-live-search='true' name='categories[]'
             option selected='' data-content='all'
               = ''
@@ -19,7 +19,7 @@ nav.navbar.navbar-default.row.filter
                 = name
 
       .navbar-form.navbar-left
-        .form-group
+        .form-group.rating-filter
           select.selectpicker size='5' data-width='100%' title='Stars' multiple='' name='scores[]'
             - for i in (1..Movie::SCORE_MAX).to_a.reverse
               - stars = Array.new(i, "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>").join
