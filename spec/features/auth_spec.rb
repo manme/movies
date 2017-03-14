@@ -94,6 +94,8 @@ feature 'Auth' do
 
       scenario do
         visit '/users/edit'
+
+        expect(find_field('Email').value).to eq(user.email)
         fill_edit
 
         expect { click_on 'Save' }.not_to change { User.count }
