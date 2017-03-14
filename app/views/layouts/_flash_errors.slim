@@ -1,5 +1,6 @@
 - flash.any?
   .row
    - flash.each do |key, value|
-    .col-sm-12.alert-danger.alert
+    .col-sm-12.alert.fade.in.alert-dismissable class="alert-#{key == 'notice' ? 'success' : 'danger' }"
+      a.close href="#" data-dismiss="alert" aria-label="close" &times;
       = value
