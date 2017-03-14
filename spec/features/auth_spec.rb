@@ -13,6 +13,16 @@ feature 'Auth' do
   let(:password) { Faker::Internet.password }
   let(:email)    { Faker::Internet.email }
 
+  let(:new_password) { Faker::Internet.password }
+  let(:new_email)    { Faker::Internet.email }
+
+  def fill_edit
+    fill_in 'Email', with: new_email
+    fill_in 'Password', with: new_password
+    fill_in 'Password Confirmation', with: new_password
+    fill_in 'Current Password', with: password
+  end
+
   def fill_sign_in
     fill_in 'Password', with: password
     fill_in 'Email', with: email
@@ -39,6 +49,7 @@ feature 'Auth' do
       before do
         user
       end
+
       scenario do
         visit '/users/sign_in'
         fill_sign_in
@@ -77,9 +88,25 @@ feature 'Auth' do
     end
   end
 
+  feature 'edit profile' do
+    context 'user exists' do
+      before { login_as(user, scope: :user) }
+
+      scenario do
+        visit '/users/edit'
+        fill_edit
+
+        expect { click_on 'Save' }.not_to change { User.count }
+        expect(current_path).to eq('/')
+        expect(page).to have_selector('.alert-danger')
+      end
+    end
+  end
+
   feature 'sign out' do
+    before { login_as(user, scope: :user) }
+
     scenario do
-      login_as(user, scope: :user)
       visit '/'
 
       expect { click_on 'Sign out' }.not_to change { User.count }
