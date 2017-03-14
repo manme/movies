@@ -43,7 +43,7 @@ feature 'index movies' do
 
       scenario 'category', js: true do
         find('.category-filter button').click
-        find(".category-filter").find('ul.dropdown-menu.inner > li', text: category_option).click
+        find('.category-filter').find('ul.dropdown-menu.inner > li', text: category_option).click
 
         # poltergeist bug with fontawesome
         page.execute_script %($('form#movies-menu').submit())
