@@ -1,4 +1,10 @@
 $ ->
+  $(document).on 'hidden.bs.dropdown', '.category-filter', (e)->
+    $(this).parents('form').submit();
+
+  $(document).on 'hidden.bs.dropdown', '.rating-filter', (e)->
+    $(this).parents('form').submit();
+
   $(document).on 'submit', 'form#movies-menu', (e)->
     e.preventDefault()
     e.stopPropagation()

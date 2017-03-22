@@ -11,7 +11,7 @@ nav.navbar.navbar-default.row.filter
       input value="1" type="hidden" name="page"
       .navbar-form.navbar-left
         .form-group.category-filter
-          select.selectpicker size='10' data-width='100%' title='Categories' data-live-search='true' name='categories[]'
+          select.selectpicker size='10' data-width='100%' title='Categories' data-live-search='true' name='categories[]' style='opacity:0;'
             option selected='' data-content='all'
               = ''
             - @filter_facade.categories_statistics.each do |name, count|
@@ -20,7 +20,7 @@ nav.navbar.navbar-default.row.filter
 
       .navbar-form.navbar-left
         .form-group.rating-filter
-          select.selectpicker size='5' data-width='100%' title='Stars' multiple='' name='scores[]'
+          select.selectpicker size='5' data-width='100%' title='Stars' multiple='' name='scores[]' style='opacity:0;'
             - for i in (1..Movie::SCORE_MAX).to_a.reverse
               - stars = Array.new(i, "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>").join
               - stars << " (#{@filter_facade.rating_statistics[i]})"
