@@ -15,6 +15,8 @@
 //= require jquery_ujs
 //= require bootstrap-select
 //= require turbolinks
+//= require history.js/history.js
+//= require history.js/history.adapter.jquery.js
 //= require bootstrap
 //= require application/main
 //= require application/vote

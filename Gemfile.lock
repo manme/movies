@@ -182,6 +182,7 @@ GEM
     rails-assets-bootstrap-flat (3.3.4)
       rails-assets-bootstrap (>= 3.0.0)
       rails-assets-jquery (>= 1.9.1)
+    rails-assets-history.js (1.8.0)
     rails-assets-jquery (3.1.1)
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
@@ -308,6 +309,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.1)
   rails-assets-bootstrap-flat
+  rails-assets-history.js
   rspec-rails (>= 3.1.0)
   rubocop
   rubocop-rspec

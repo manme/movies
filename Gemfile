@@ -29,6 +29,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap_helper', '~> 4.2.3'
 gem 'rails-assets-bootstrap-flat'
 gem 'bootstrap-select-rails'
+gem 'rails-assets-history.js'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'

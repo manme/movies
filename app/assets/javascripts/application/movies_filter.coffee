@@ -18,6 +18,7 @@ $ ->
     #   type: 'GET',
     #   data: form_params,
     #   url: $('.movies-container').data('js-url'),
-    #   dataType : 'script'
-    # history.replaceState('', '', "/movies?#{form_params}");
+    #   dataType : 'script',
+    #   success: (data, status, xhr)->
+    #     History.pushState(null, null, "/movies?#{form_params}");
 
