@@ -11,14 +11,16 @@ $ ->
     form_params = $(this).serialize()
 
     # simple way to use a filter with history
-    Turbolinks.visit("/movies?#{form_params}")
+    # Turbolinks.visit("/movies?#{form_params}")
 
     # alternative way to load movies with filter params
-    # $.ajax
-    #   type: 'GET',
-    #   data: form_params,
-    #   url: $('.movies-container').data('js-url'),
-    #   dataType : 'script',
-    #   success: (data, status, xhr)->
-    #     History.pushState(null, null, "/movies?#{form_params}");
+    $.ajax
+      type: 'GET',
+      data: form_params,
+      url: $('.movies-container').data('js-url'),
+      dataType : 'script',
+      success: (data, status, xhr)->
+        history.replaceState(null, null, "/movies?#{form_params}");
 
+  $(window).bind "popstate", ->
+    $.getScript(location.href)

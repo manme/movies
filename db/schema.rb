@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306115626) do
+ActiveRecord::Schema.define(version: 20170326052031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20170306115626) do
     t.bigint   "total_score",  default: 0
     t.float    "avg_score",    default: 0.0
     t.integer  "votes_number", default: 0
+    t.index ["is_deleted", "avg_score"], name: "index_movies_on_is_deleted_and_avg_score", using: :btree
+    t.index ["is_deleted"], name: "index_movies_on_is_deleted", using: :btree
     t.index ["user_id"], name: "index_movies_on_user_id", using: :btree
   end
 
